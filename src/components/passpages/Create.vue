@@ -23,7 +23,12 @@
         <div class="form-group col-md-6">
           <label for class="cc-font cc-500 size-16">Status</label>
           <select class="form-control gen-input" id="projectStatus" v-model="project.status">
-            <option v-for="(option, index) in Status" :key="index" :value="index">{{option}}</option>
+            <option
+              v-for="(option, index) in Status"
+              :key="index"
+              :value="index"
+              :selected="project.status"
+            >{{option}}</option>
           </select>
         </div>
         <div class="col-lg-12">
@@ -35,7 +40,7 @@
 </template>
 <script>
 import Auth from "../../helper/auth";
-const api = new Auth().api()
+const api = new Auth().Api();
 
 export default {
   name: "Create",
@@ -45,7 +50,7 @@ export default {
         name: "",
         host: "",
         domain: "",
-        status: "choose"
+        status: 0
       },
       Status: ["passive", "active"]
     };
@@ -53,9 +58,10 @@ export default {
   methods: {
     DataPost() {
       return new Promise((resolve, reject) => {
-        api.post("projects", this.project)
+        api
+          .post("projects", this.project)
           .then(res => {
-            this.$router.push('/edit/'+res.data.data.id)
+            this.$router.push("/edit/" + res.data.data.id);
             resolve(res);
           })
           .catch(err => {

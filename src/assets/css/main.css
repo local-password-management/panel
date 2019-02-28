@@ -252,8 +252,8 @@ html,body{
 }
 
 .line{
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 25px;
+    margin-bottom: 25px;
     width: 25%;
     border:1px solid #e4e4e4;
 }

@@ -60,8 +60,8 @@
     <div class="line mx-auto"></div>
     <div class="col-lg-8 col-md-12 mx-auto">
       <div class="envarea">
-        <div class="envarea__item" v-for="(item, index) in Status" :key="index">
-          <EnvItem :item="project"/>
+        <div class="envarea__item">
+          <EnvItem :items="projectFields"/>
         </div>
 
         <div class="envarea__additem"></div>
@@ -72,7 +72,7 @@
 <script>
 import EnvItem from "../envpages/Envitem";
 import Auth from "../../helper/auth";
-const api = new Auth().api();
+const api = new Auth().Api();
 export default {
   name: "Edit",
   components: {
@@ -84,18 +84,27 @@ export default {
         name: "",
         host: "",
         domain: "",
-        status: "choose"
+        status: 0
       },
+      projectFields:[],
       Status: ["passive", "active"],
       disInput: true
     };
   },
   mounted() {
-    api
-      .get("projects/" + this.$route.params.id)
+    this.$store
+      .dispatch("GetData", this.$route.params.id)
       .then(res => {
         console.log(res);
         this.project = res.data.data;
+      })
+      .catch(err => console.log(err));
+    this.$store
+      .dispatch("GetFields", this.$route.params.id)
+      .then(res => {
+        this.projectFields = res.data.data;
+        console.log("asdfsad",this.projectFields);
+
       })
       .catch(err => console.log(err));
   },
@@ -105,18 +114,16 @@ export default {
       this.disInput = false;
     },
     EditPost() {
-      
-      return new Promise((resolve, reject) => {
-        api
-          .put("projects/" + this.$route.params.id, this.project)
-          .then(res => {
-            this.disInput = true;
-            resolve(res);
-          })
-          .catch(err => {
-            reject(err);
-          });
-      });
+      const setParam = {
+        params: this.$route.params.id,
+        data: this.project
+      };
+      this.$store
+        .dispatch("UpdateData", setParam)
+        .then(res => {
+          this.disInput = true;
+        })
+        .catch(err => console.log(err));
     }
   }
 };

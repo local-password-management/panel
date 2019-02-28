@@ -6,16 +6,15 @@ const AUTH_URL ='http://api.local/';
 export default class Auth {
     constructor(){}
 
-     api(){
+     Api(){
         return axios.create({
             baseURL: API_URL,
             headers: {
                 'Authorization': "Bearer " + localStorage.getItem('token')
-            },
-            timeout: 1000
+            }
         });
      } 
-     login(){
+     Login(){
          return axios.create({
             baseURL: AUTH_URL,
             timeout: 1000

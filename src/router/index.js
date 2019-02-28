@@ -2,10 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/pages/Login'
 import Dashboard from '@/components/pages/Dashboard'
+import NotFound from '@/components/pages/NotFound'
 import List from '@/components/passpages/List'
 import Create from '@/components/passpages/Create'
 import Edit from '@/components/passpages/Edit'
-import NotFound from '@/components/pages/NotFound'
+import CreateField from '@/components/envpages/CreateField'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ const router = new Router({
           path:'/edit/:id',
           name:'edit',
           component:Edit
+        },
+        {
+          path:'/createfield/:id',
+          name:'createfield',
+          component:CreateField
         }
       ]
     },

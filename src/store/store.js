@@ -95,6 +95,17 @@ const actions = {
                 });
         });
     },
+    UpdateField({commit},setParam){
+        return new Promise((resolve, reject) => {
+            api.put("fields/"+ setParam.id, setParam.data)
+            .then(res => {
+              resolve(res);
+            })
+            .catch(err => {
+              reject(err);
+            });
+        });
+    },
     GetAllData({commit}){
         return new Promise((resolve, reject) => {
             api.get("projects")

@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="col-xl-8 col-lg-10 col-md-12 mx-auto">
       <div class="envarea">
         <div class="envarea__item">
@@ -110,7 +110,6 @@ export default {
       .dispatch("GetFields", this.$route.params.id)
       .then(res => {
         this.fields = res.data.data;
-        this.fields.isInput = this.isInput;
       })
       .catch(err => console.log(err));
     this.$store
@@ -121,17 +120,33 @@ export default {
           name: "choose",
           id: 0
         };
-        this.fields.fieldGroups = this.fieldGroups
       })
       .catch(err => console.log(err));
   },
   methods: {
     SaveField() {
+       if (
+        this.fieldArea.key == "" ||
+        this.fieldArea.value == ""
+      ){
+         this.$swal({
+            type: "warning",
+            text: 'Please fill in the fields',
+          });
+        return false;
+      }
+       
       this.$store
         .dispatch("AddField", this.fieldArea)
         .then(res => {
+            this.$swal({
+            type: "success",
+            title: "Created"
+          });
           this.fieldArea.field_group = res.data.data.field_group;
-          this.fields.push(this.fieldArea) 
+          this.fields.push(this.fieldArea);
+          this.fieldArea.key =""
+          this.fieldArea.value=""
         })
         .catch(err => console.log(err));
     }

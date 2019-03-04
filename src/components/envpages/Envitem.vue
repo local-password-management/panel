@@ -1,9 +1,9 @@
 <template>
   <div>
     <div v-for="(item, index) in items" :key="index">
-      <h1 class="rb-font rb-600 size-20 py-3">{{item.field_group.name + item.field_group.id}}</h1>
+      <h1 class="rb-font rb-600 size-20 py-3">{{item.field_group.name}}</h1>
       <div class="content sh-box bg-color col-md-12">
-        <div class="row align-items-end" v-if="items.isInput">
+        <div class="row align-items-end">
           <div class="col-md-3">
             <label class="cc-font cc-600 size-16 d-block">Key</label>
             <input
@@ -29,9 +29,10 @@
               v-model="item.field_group_id"
             >
               <option
-                v-for="(option, index) in items.fieldGroups"
+                v-for="(option, index) in fieldGroups"
                 :key="index"
                 :value="option.id"
+                :disabled="!item.isActive"
               >{{option.name}}</option>
             </select>
           </div>
@@ -44,16 +45,6 @@
             <button v-else class="create-btn cc-font cc-600 d-block mx-auto" @click="SaveField(index)">Save</button>
           </div>
         </div>
-        <div class="row align-itemse end" v-else>
-          <div class="col-md-6 col-sm-6">
-            <label class="cc-font cc-600 size-16 d-block">Key</label>
-            <label class="cc-font cc-500 size-16 d-block">{{item.key}}</label>
-          </div>
-          <div class="col-md-6 col-sm-6">
-            <label class="cc-font cc-600 size-16 d-block">Value</label>
-            <label class="cc-font cc-500 size-16 d-block">{{item.value}}</label>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -64,30 +55,33 @@ export default {
   props: ["items"],
   data() {
     return {
-
-      dataItem:{
-        id:'',
-        key:'',
-        value:''
-      }
+      fieldGroups:{}
     };
   },
+  created(){
+    this.$store
+      .dispatch("GetGroupFields")
+      .then(res => {
+        this.fieldGroups = res.data.data;
+        this.fieldGroups[0] = {
+          name: "choose",
+          id: 0
+        };
+      })
+      .catch(err => console.log(err));
+    
+    
+  },
   methods: {
-    // TODO Field Grouppsss
     // eğer path createfield/:id ise -- EditProject ve Edit Post-- çalışır
     EditField(index) {
       this.$set(this.items[index],'isActive',true)
+      console.log("data",this.items);
     },
     SaveField(index) {
-      console.log("adfafdasdf",this.items);
-      this.dataItem.id = this.items[index].field_group.id
-      this.dataItem.key = this.items[index].key;
-      this.dataItem.value = this.items[index].value; 
-      console.log("fdsafsda",this.dataItem);
-      
       const setParam = {
         id:this.items[index].id,
-        data: this.dataItem
+        data: this.items[index]
       };
       this.$store
         .dispatch("UpdateField", setParam)

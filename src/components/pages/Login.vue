@@ -28,14 +28,6 @@
               <p class="text-center mt-3 mb-0">
                 <a class="clr-wh size-12 cc-font login__forget">Şifremi Unuttum!</a>
               </p>
-              <p v-if="errors.length">
-                 <span
-                  class="errors-ms cc-font cc-400 size-14"
-                  v-for=" error in errors" :key="error.length"
-                ><br>
-                {{error}}
-                </span>
-                </p>
             </form>
           </div>
         </div>
@@ -44,38 +36,55 @@
   </div>
 </template>
 <script>
-
 export default {
   name: "Login",
   data() {
     return {
       username: "",
       password: "",
-      errors: []
     };
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     LogIn() {
-      this.errors = [];
-      if(this.username == '' || this.password == ''){
-        this.errors.push('Boş Alanları doldurunuz')
-        return false
+      if (this.username == "" || this.password == "") {
+        this.$swal({
+            type: "warning",
+            text: 'Please fill in the fields',
+          });
+        return false;
       }
       const userInfo = {
-        client_id: "10",
-        client_secret: "TWnihvJ4aIiHXBhlFrxllOmW8wxSLr0DW6eorXB4",
+        client_id: "1",
+        client_secret: "3cSPXzIXRMLouicb5wckXJLYmk0Pgkqh6dXjl3nb",
         grant_type: "password",
         username: this.username,
         password: this.password
       };
+
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000
+      });
+
       this.$store
         .dispatch("Login", userInfo)
         .then(res => {
-          this.$router.push("/dashboard");
+          Toast.fire({
+            type: "success",
+            title: "Signed in successfully"
+          });
+          setTimeout(() => {
+            this.$router.push("/dashboard");
+          }, 1000);
         })
         .catch(err => {
+          this.$swal({
+            type: "warning",
+            text: 'Please check the fields',
+          });
           this.$router.push("/");
         });
     }

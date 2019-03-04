@@ -62,6 +62,17 @@ const actions = {
             resolve()
         })
     },
+    PostProject({commit},data){
+        return new Promise((resolve, reject) => {
+            api.post("projects", data)
+              .then(res => {
+                resolve(res);
+              })
+              .catch(err => {
+                reject(err);
+              });
+          });
+    },
     GetFields({commit},params){
         return new Promise((resolve, reject) => {
             api.get("fields?project_id=" + params)
@@ -128,6 +139,7 @@ const actions = {
                 });
         });
     },
+    
     UpdateData({commit},setParam){
         return new Promise((resolve, reject) => {
             api.put("projects/" + setParam.params, setParam.data)

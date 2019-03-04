@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://api.local/api/';
-const AUTH_URL ='http://api.local/';
+const API_URL = 'http://localhost/pass/public/api/';
+const AUTH_URL ='http://localhost/pass/public/';
 
 export default class Auth {
     constructor(){}

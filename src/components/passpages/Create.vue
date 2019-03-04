@@ -18,7 +18,7 @@
         </div>
         <div class="form-group col-md-6">
           <label for class="cc-font cc-500 size-16">Host Name</label>
-          <input type="text" class="form-control gen-input" id="projectHost" v-model="project.host">
+          <input type="text" class="form-control gen-input" placeholder="127.0.0.1" id="projectHost" v-model="project.host">
         </div>
         <div class="form-group col-md-6">
           <label for class="cc-font cc-500 size-16">Status</label>
@@ -39,9 +39,6 @@
   </div>
 </template>
 <script>
-import Auth from "../../helper/auth";
-const api = new Auth().Api();
-
 export default {
   name: "Create",
   data() {
@@ -57,17 +54,27 @@ export default {
   },
   methods: {
     DataPost() {
-      return new Promise((resolve, reject) => {
-        api
-          .post("projects", this.project)
-          .then(res => {
-            this.$router.push("/edit/" + res.data.data.id);
-            resolve(res);
-          })
-          .catch(err => {
-            reject(err);
+      if (
+        this.project.name == "" ||
+        this.project.host == "" ||
+        this.project.domain == ""
+      ){
+         this.$swal({
+            type: "warning",
+            text: 'Please fill in the fields',
           });
-      });
+        return false;
+      }
+      this.$store
+        .dispatch("PostProject", this.project)
+        .then(res => {
+          this.$swal({
+            type: "success",
+            title: "Created"
+          });
+          this.$router.push("/edit/" + res.data.data.id);
+        })
+        .catch(err => console.log(errr));
     }
   }
 };

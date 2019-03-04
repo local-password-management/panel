@@ -61,7 +61,7 @@
     <div class="col-lg-8 col-md-12 mx-auto">
       <div class="envarea">
         <div class="envarea__item">
-          <EnvItem :items="projectFields"/>
+          <ListEnvItem :items="projectFields"/>
         </div>
 
         <div class="envarea__additem"></div>
@@ -70,13 +70,13 @@
   </div>
 </template>
 <script>
-import EnvItem from "../envpages/Envitem";
+import ListEnvItem from "../envpages/ListEnvitem";
 import Auth from "../../helper/auth";
 const api = new Auth().Api();
 export default {
   name: "Edit",
   components: {
-    EnvItem: EnvItem
+    ListEnvItem: ListEnvItem
   },
   data() {
     return {
@@ -95,7 +95,6 @@ export default {
     this.$store
       .dispatch("GetData", this.$route.params.id)
       .then(res => {
-        console.log(res);
         this.project = res.data.data;
       })
       .catch(err => console.log(err));
@@ -103,12 +102,9 @@ export default {
       .dispatch("GetFields", this.$route.params.id)
       .then(res => {
         this.projectFields = res.data.data;
-        console.log("asdfsad",this.projectFields);
-
       })
       .catch(err => console.log(err));
   },
-
   methods: {
     EditProject() {
       this.disInput = false;

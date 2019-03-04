@@ -41,9 +41,7 @@ export default {
     this.$store
       .dispatch("GetAllData")
       .then(res => {
-        console.log(res);
         this.AllData = res.data.data;
-        console.log(this.AllData);
       })
       .catch(err => {
         console.log(err);

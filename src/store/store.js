@@ -139,7 +139,17 @@ const actions = {
                 });
         });
     },
-    
+    DeleteField({commit},params){
+        return new Promise((resolve, reject) => {
+            api.delete("fields/"+ params)
+            .then(res => {
+              resolve(res);
+            })
+            .catch(err => {
+              reject(err);
+            });
+        });
+    },
     UpdateData({commit},setParam){
         return new Promise((resolve, reject) => {
             api.put("projects/" + setParam.params, setParam.data)

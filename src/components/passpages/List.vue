@@ -18,7 +18,10 @@
             <label v-else class="cc-font cc-500 size-16 d-block">Passive</label>
           </div>
           <div class="col-md-12">
-            <router-link :to="`/edit/${item.id}`" class="create-btn cc-font cc-600 d-inline-block mx-auto">Edit</router-link>
+            <router-link
+              :to="`/edit/${item.id}`"
+              class="create-btn cc-font cc-600 d-inline-block mx-auto"
+            >Edit</router-link>
             <router-link
               :to="`/createfield/${item.id}`"
               class="create-btn cc-font cc-600 d-inline-block mx-auto"
@@ -27,14 +30,20 @@
         </div>
       </div>
     </div>
+    <div class="d-flex justify-content-center mt-3 page-navigate">
+      <a class="px-2 mr-2 create-btn" :class="{'active-create-btn' :index + 1 === page}" v-for="(item, index) in total" :key="index" @click="ChangePage(index)">{{index +1}}</a>
+    </div>
   </div>
 </template>
 <script>
+import Axios from "../../helper/auth";
 export default {
   name: "List",
   data() {
     return {
-      AllData: []
+      AllData: [],
+      total:0,
+      page:1,
     };
   },
   mounted() {
@@ -42,10 +51,39 @@ export default {
       .dispatch("GetAllData")
       .then(res => {
         this.AllData = res.data.data;
+        this.total = res.data.meta.last_page
+        console.log(res);
       })
       .catch(err => {
         console.log(err);
       });
+  },
+  methods: {
+    ChangePage(page){
+      this.page = page +1;
+      console.log(this.page)
+    },
+    GetData() {
+      return new Promise((resolve, reject) => {
+        new Axios()
+          .Api()
+          .get("projects?page=" + this.page)
+          .then(res => {
+            console.log("fasfasd",this.page);
+            this.AllData = [];
+            this.AllData = res.data.data;
+          })
+          .catch(err => console.log(err));
+      });
+    }
+  },
+  watch:{
+    page:{
+      immediate:true,
+      handler(newVal,oldVal){
+        this.GetData()
+      }
+    }
   }
 };
 </script>

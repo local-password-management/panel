@@ -5,11 +5,8 @@ import App from './App'
 import router from './router'
 import store from './store/store'
 import VueSweetalert2 from 'vue-sweetalert2'
-import VueTheMask from 'vue-the-mask'
-
 
 Vue.use(VueSweetalert2);
-Vue.use(VueTheMask)
 Vue.config.productionTip = false
 
 router.beforeEach((to,from, next) => {

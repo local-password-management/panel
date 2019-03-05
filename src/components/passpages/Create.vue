@@ -62,6 +62,8 @@ export default {
          this.$swal({
             type: "warning",
             text: 'Please fill in the fields',
+            confirmButtonText:"Close",
+            confirmButtonColor:'#f8bb86'
           });
         return false;
       }
@@ -70,7 +72,8 @@ export default {
         .then(res => {
           this.$swal({
             type: "success",
-            title: "Created"
+            title: "Created",
+            confirmButtonColor:'#00BB30'
           });
           this.$router.push("/edit/" + res.data.data.id);
         })

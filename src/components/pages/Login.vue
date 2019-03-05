@@ -51,6 +51,7 @@ export default {
         this.$swal({
             type: "warning",
             text: 'Please fill in the fields',
+            confirmButtonColor:'#00BB30'
           });
         return false;
       }
@@ -82,8 +83,9 @@ export default {
         })
         .catch(err => {
           this.$swal({
-            type: "warning",
+            type: "error",
             text: 'Please check the fields',
+            confirmButtonColor:'red'
           });
           this.$router.push("/");
         });

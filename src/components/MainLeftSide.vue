@@ -7,12 +7,13 @@
         <div class="main__menuwrapper">
             <ul class="main__menulist text-center">
                 <li>
-                    <a href="#" class="clr-f4 size-18">
+                    <router-link to="/dashboard" class="clr-f4 size-18">
                         <i class="fas fa-server"></i>
-                        <span class="d-block rb-font rb-400 size-12">Sunucular</span>
-                    </a>
+                        <span class="d-block rb-font rb-400 size-12">Dashboard</span>
+                    </router-link>
+                    
                 </li>
-                <li>
+                <!-- <li>
                     <a href="#" class="clr-f4 size-18">
                         <i class="fas fa-project-diagram"></i>
                         <span class="d-block rb-font rb-400 size-12">Bilgiler</span>
@@ -23,7 +24,7 @@
                         <i class="fas fa-key"></i>
                         <span class="d-block rb-font rb-400 size-12">Şifre oluştur</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

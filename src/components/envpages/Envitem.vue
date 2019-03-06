@@ -82,7 +82,6 @@ export default {
     // eğer path createfield/:id ise -- EditProject ve Edit Post-- çalışır
     EditField(index) {
       this.$set(this.items[index],'isActive',true)
-      console.log("data",this.items);
     },
     SaveField(index) {
       const setParam = {
@@ -104,7 +103,6 @@ export default {
           confirmButtonColor:"#00b730"
         });
         this.$delete(this.items,index)
-        console.log(this.items,"slinen",this.items[index])
       }).catch(err => err);
     }
    

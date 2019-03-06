@@ -28,10 +28,14 @@ export default {
   name: "MainHeader",
   data() {
     return {
-      profileImg: Imgsrc
+      profileImg: Imgsrc,
+      Active_element:false
     };
   },
   methods: {
+    Open(){
+      this.Active_element = true;
+    },
     LogOut() {
       this.$store.dispatch("Logout").then(() => this.$router.push("/"));
     }

@@ -121,7 +121,6 @@ export default {
     this.$store
       .dispatch("GetFields", this.$route.params.id)
       .then(res => {
-        console.log(res);
         this.fields = res.data.data;
         this.total = res.data.meta.last_page;
       })
@@ -142,7 +141,9 @@ export default {
       if (this.fieldArea.key == "" || this.fieldArea.value == "") {
         this.$swal({
           type: "warning",
-          text: "Please fill in the fields"
+          text: "Please fill in the fields",
+          confirmButtonColor: "#b70c00",
+          confirmButtonText: "Cancel"
         });
         return false;
       } else {
@@ -151,7 +152,8 @@ export default {
           .then(res => {
             this.$swal({
               type: "success",
-              title: "Created"
+              title: "Created",
+              confirmButtonColor: "#00b730"
             });
             this.fieldArea.field_group = res.data.data.field_group;
             this.fields.push(this.fieldArea);
@@ -163,7 +165,6 @@ export default {
     },
     ChangePage(page) {
       this.page = page + 1;
-      console.log(this.page);
     },
     GetData() {
       return new Promise((resolve, reject) => {

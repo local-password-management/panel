@@ -46,13 +46,12 @@ export default {
       page:1,
     };
   },
-  mounted() {
+  created() {
     this.$store
       .dispatch("GetAllData")
       .then(res => {
         this.AllData = res.data.data;
         this.total = res.data.meta.last_page
-        console.log(res);
       })
       .catch(err => {
         console.log(err);
@@ -61,7 +60,6 @@ export default {
   methods: {
     ChangePage(page){
       this.page = page +1;
-      console.log(this.page)
     },
     GetData() {
       return new Promise((resolve, reject) => {
@@ -69,7 +67,6 @@ export default {
           .Api()
           .get("projects?page=" + this.page)
           .then(res => {
-            console.log("fasfasd",this.page);
             this.AllData = [];
             this.AllData = res.data.data;
           })

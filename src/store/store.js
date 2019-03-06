@@ -161,6 +161,7 @@ const actions = {
             });
         });
     }
+    
 }
 
 const store = new Vuex.Store({

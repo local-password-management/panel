@@ -173,12 +173,13 @@ html,body{
 .user__list{
     display: none;
     position: absolute;
-    top: 56px;
+    top: 45px;
     left: 0;
     list-style: none;
     width: 100%;
     padding: 10px;
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,.1);
+    z-index: 15;
 }
 .user__list::before{
     content: '';
@@ -195,23 +196,24 @@ html,body{
 .user:hover .user__list{
     display: block;
 }
-.create-btn{
+.mobil-menu{
+    padding: 5px 12px !important;
+}
+.create-btn,.delete-btn{
     color: black;
     padding: 5px 20px;
-    border: 1px solid #00b730;
     background-color: transparent;
     transition: all .3s;
     cursor: pointer;
+}
+.create-btn{
+    border: 1px solid #00b730;
+
+}
+.delete-btn{
+    border: 1px solid #b70c00;
 }
 
-.delete-btn{
-    color: black;
-    padding: 5px 20px;
-    border: 1px solid #b70c00;
-    background-color: transparent;
-    transition: all .3s;
-    cursor: pointer;
-}
 .delete-btn:hover{
     background-color:#b70c00; 
     color: white !important;
